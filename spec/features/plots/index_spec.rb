@@ -41,6 +41,8 @@ RSpec.describe 'plot index' do
 
           expect(page).not_to have_content(plant3.name)
         end
+        expect(plot2.locations.find_by(plant_id: 3, plot_id: 2)).to be_nil
+        expect(Location.count).to be(4)
       end
     end
   end
