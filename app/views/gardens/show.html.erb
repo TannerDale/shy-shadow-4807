@@ -1,5 +1,5 @@
 <h1><%= @garden.name %></h1>
 
-<% @garden.unique_plants.each do |plant| %>
+<% @garden.ordered_unique_under_100_day_plants.each do |plant| %>
   <%= plant.name %>
 <% end %>

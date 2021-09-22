@@ -6,7 +6,7 @@ RSpec.describe Garden do
     it { should have_many(:plants).through :plots }
   end
 
-  describe 'plants' do
+  describe 'scopes/class methods' do
     let(:garden) { Garden.create!(name: 'Greenery', organic: true) }
     let(:garden2) { Garden.create!(name: 'Greenery', organic: true) }
     let!(:plot1) { Plot.create!(number: 1, size: 'pretty big', direction: 'Weast', garden_id: garden.id) }
@@ -22,13 +22,19 @@ RSpec.describe Garden do
     let!(:location1) { Location.create!(plant_id: plant1.id, plot_id: plot1.id) }
     let!(:location2) { Location.create!(plant_id: plant2.id, plot_id: plot1.id) }
     let!(:location3) { Location.create!(plant_id: plant3.id, plot_id: plot2.id) }
-    let!(:location4) { Location.create!(plant_id: plant4.id, plot_id: plot3.id) }
+    let!(:location4) { Location.create!(plant_id: plant3.id, plot_id: plot3.id) }
     let!(:location5) { Location.create!(plant_id: plant4.id, plot_id: plot2.id) }
     let!(:location6) { Location.create!(plant_id: plant5.id, plot_id: plot2.id) }
-    let!(:location7) { Location.create!(plant_id: plant6.id, plot_id: plot4.id) }
+    let!(:location7) { Location.create!(plant_id: plant4.id, plot_id: plot2.id) }
+    let!(:location8) { Location.create!(plant_id: plant4.id, plot_id: plot2.id) }
+    let!(:location9) { Location.create!(plant_id: plant6.id, plot_id: plot4.id) }
 
-    it 'has unique plants under 100 days to harvest' do
-      expect(garden.unique_plants).to eq([plant1, plant3, plant4])
+    # it 'has unique plants under 100 days to harvest' do
+    #   expect(garden.unique_plants).to eq([plant1, plant3, plant4])
+    # end
+
+    it 'has plants ordered by count' do
+      expect(garden.ordered_unique_under_100_day_plants).to eq([plant4, plant3, plant1])
     end
   end
 end
